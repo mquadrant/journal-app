@@ -30,6 +30,7 @@ const userSchema:Schema = new Schema({
         type: String,
         required:[true,"A user must have email"],
         trim: true,
+        unique:true,
     },
     password:{
         type:String,
