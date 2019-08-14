@@ -31,8 +31,23 @@ router.get('/', async function(_req, res, _next) {
   }
 });
 /* GET single user listing. */
-router.get('/:userId', function(_req, res, _next) {
-  res.send('respond with a resource');
+router.get('/:userId', async function(req, res, _next) {
+  try{
+    const user = await User.findById(req.params.userId);
+    if(!user)throw new Error("No user found");
+    res.status(200).json({
+      status: "success",
+      data: {
+          user,
+      }
+    })
+  }catch(error){
+    res.status(404).json({
+      status:"fail",
+      message: error
+    });
+  }
+  
 });
 /* PATCH user updating. */
 router.patch('/:userId', function(_req, res, _next) {
