@@ -11,10 +11,18 @@ const router = express.Router();
 router.post('/login', async function(req, res, _next) {
   try{
     const user = await User.findOne({email:req.body.email});
-    if (!user) throw new Error("Login Failed");
+    if (!user){
+      return res.status(409).json({
+        status:"Login failed"
+      })
+    }else{
       const isEqual = await bcrypt.compare(req.body.password, user.password);
-      if (!isEqual) throw new Error("Login Failed");
-      const token = jwt.sign(
+      if (!isEqual){
+        return res.status(409).json({
+          status:"Login failed"
+        })
+      }else{
+        const token = jwt.sign(
           { userId: user.id, email: user.email },
           env.jwtSecret!,
           {
@@ -27,7 +35,14 @@ router.post('/login', async function(req, res, _next) {
         token: token,
         tokenExpiration: 1,
       })
+      } 
+    }
   }catch(error){
-    throw error;
+    return res.status(500).json({
+      status:"fail",
+      message:"Something went wrong!"
+    })
   }
 });
+
+export default router;
