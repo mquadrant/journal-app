@@ -80,6 +80,7 @@ export const userSignup = async function (req:Request, res:Response, _next:NextF
       res.status(200).json({
         status: "success",
         data: {
+          _id:user._id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
@@ -105,7 +106,7 @@ export const updateUser = async function(req:Request, res:Response, _next:NextFu
       });
     }else{
       try{
-        const user = await User.findByIdAndUpdate(req.params.userId,data);
+        const user = await User.findByIdAndUpdate(req.params.userId,data,{new: true});
         if(!user)throw new Error("User does not exist!");
         return res.status(201).json({
           status: "success",
