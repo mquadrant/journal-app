@@ -1,12 +1,23 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import User from './../../models/users'
-import {validateUserEdit} from './userValidation';
+import User from './../../models/users';
+import jwt from 'jsonwebtoken';
+import env from "./../../config"
+import {validateUserEdit,validateSignup} from './userValidation';
 
 const router = express.Router();
 
 /* POST user creating (Sign up). */
 router.post('/signup', async function(req, res, _next) {
+const {error} = validateSignup(req.body);
+if(error){
+// send a 422 error response if validation fails
+  return res.status(422).json({
+    status: 'error',
+    message: 'Invalid request data',
+    data: req.body,
+  });
+}else{
   try{
     const isEmailExist = await User.findOne({email:req.body.email});
     if(isEmailExist){
@@ -21,7 +32,7 @@ router.post('/signup', async function(req, res, _next) {
           ...req.body,
           password: hashedPassword
         }).save();
-        res.status(201).json({
+        return res.status(201).json({
           status:"success",
           message: "created successfully",
           data: {
@@ -32,22 +43,43 @@ router.post('/signup', async function(req, res, _next) {
           }
         })
       }catch(error){
-        res.status(500).json({
+        return res.status(500).json({
           status:"fail",
           error: error
         })
       }
     }
   }catch(error){
-    res.status(500).json({
+    return res.status(500).json({
       status:"fail",
       error: error
 })
   }
-
+}
 });
 /* POST user Logging in (Logging In). */
-router.post('/login', function(_req, _res, _next) {
+router.post('/login', async function(req, res, _next) {
+  try{
+    const user = await User.findOne({email:req.body.email});
+    if (!user) throw new Error("Login Failed");
+      const isEqual = await bcrypt.compare(req.body.password, user.password);
+      if (!isEqual) throw new Error("Login Failed");
+      const token = jwt.sign(
+          { userId: user.id, email: user.email },
+          env.jwtSecret!,
+          {
+              expiresIn: "1h",
+          }
+      );
+      return res.status(200).json({
+        message:"successfully logged In",
+        userId: user.id,
+        token: token,
+        tokenExpiration: 1,
+      })
+  }catch(error){
+    throw error;
+  }
 });
 /* GET users listing. */
 router.get('/', async function(_req, res, _next) {
@@ -95,7 +127,7 @@ router.patch('/:userId', async function(req, res, _next) {
   const {error} = validateUserEdit(data);
   if (error) {
     // send a 422 error response if validation fails
-    res.status(422).json({
+    return res.status(422).json({
       status: 'error',
       message: 'Invalid request data',
       data: data,
@@ -104,7 +136,7 @@ router.patch('/:userId', async function(req, res, _next) {
     try{
       const user = await User.findByIdAndUpdate(req.params.userId,data);
       if(!user)throw new Error("User does not exist!");
-      res.status(201).json({
+      return res.status(201).json({
         status: "success",
         data: {
             firstName: user.firstName,
@@ -113,7 +145,7 @@ router.patch('/:userId', async function(req, res, _next) {
         }
       })
     }catch(error){
-      res.status(404).json({
+      return res.status(404).json({
         status:"fail",
         message: error
       });
@@ -122,9 +154,9 @@ router.patch('/:userId', async function(req, res, _next) {
 
 });
 /* DELETE deleting a user by id. */
-router.delete('/:userId', function(req, res, _next) {
+router.delete('/:userId', async function(req, res, _next) {
   try{
-    const user = User.deleteOne({_id:req.params.userId});
+    const user = await User.deleteOne({_id:req.params.userId});
     if(!user)throw new Error("User doesn't exist!")
     res.status(204).json({
       status: "success"
