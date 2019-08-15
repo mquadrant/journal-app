@@ -1,18 +1,19 @@
 import express from 'express';
 import {createJournal,getAllUserJournals, getSingleUserJournal, updateJournal, deleteJournal} from '../../controllers/journalsController'
+import checkAuth from '../../middleware/auth/check-auth';
 
 
 const router = express.Router();
 
 /* POST create Journal. */
-router.get('/', createJournal);
+router.post('/',checkAuth, createJournal);
 /* GET Journals for a user listing. */
-router.get('/:userId', getAllUserJournals);
+router.get('/',checkAuth, getAllUserJournals);
 /* GET single Journal. */
-router.get('/:userId/:journalId', getSingleUserJournal);
+router.get('/:journalId',checkAuth, getSingleUserJournal);
 /* PATCH journal updating. */
-router.patch('/:userId/:journalId', updateJournal);
+router.put('/:journalId',checkAuth, updateJournal);
 /* DELETE deleting a journal by id. */
-router.delete('/:userId/:journalId', deleteJournal)
+router.delete('/:journalId',checkAuth, deleteJournal)
 
 export default router;
