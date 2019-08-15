@@ -4,6 +4,8 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import env from "./config";
 
 import indexRouter from './routes/index';
 
@@ -16,7 +18,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//Connection to mongoDB
+const uri = `${env.databaseURL}`;
+
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify:false
+});
+const connection = mongoose.connection;
+connection.once('open', () => {
+  // console.log('MongoDB database connection established successfully!');
+});
+connection.once('open', () => {});
+connection.on('error', () => {
+  console.log('Error Connecting To Database');
+});
+
+//REST route
+app.use('/api', indexRouter);
 
 
 if (process.env.NODE_ENV === 'production') {
