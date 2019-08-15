@@ -1,7 +1,7 @@
 import express from 'express';
 import usersRouter from './user/users';
-import authRouter from './user/users';
-import journalRouter from './user/users';
+import authRouter from './auth/auth';
+import journalRouter from './journal/journals';
 const router = express.Router();
 
 /* GET home page. */
