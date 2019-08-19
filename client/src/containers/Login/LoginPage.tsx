@@ -1,42 +1,19 @@
-import React from 'react'
-import {Link} from 'react-router-dom';
+import React from 'react';
 import { Form} from 'semantic-ui-react';
 import styled from 'styled-components';
-import Logo2 from '../../images/LogoAppsvg.svg';
 import LandingImage from '../../images/landingImage.svg';
+import Header from '../../components/Header';
 
 interface Props {
     
 }
 
-const Header = styled.nav`
-    display: flex;
-    height: 60px;
-    align-items: center;
-    padding:5px 50px;
 
-    img.logo{
-        margin-right:auto;
-    }
-    ul.nav{
-        margin-left:auto;
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: flex-end;
-        list-style:none;
-        li a {
-        color: #707070;
-        text-decoration: none;
-        margin: 0 1em;
-      }
-    }
-`;
-
-const LandingPage =  styled.div`
+export const LandingPage =  styled.div`
+display:flex;
+flex-direction:column;
   height: 100vh;
-  background-color: #F8F8F8;
-  background: url(${LandingImage}) no-repeat;
-  background-position: 78% 65%; 
+  background-color: #F8F8F8; 
 `;
 
 const submitButton = {
@@ -51,7 +28,7 @@ const submitButton = {
     background: '#34a853',
   };
 
-  const Capsule = styled.button`
+  export const Capsule = styled.button`
   background-color: #b8d344;
   width: 148px;
   height: 48px;
@@ -120,23 +97,13 @@ const SimpleForm =  styled(Form)`
     .form input#password:-webkit-autofill {
         border-color: #2d293d !important;
     }
-
 `;
 
 export default function LoginPage(): any {
     return (
-        <LandingPage>
-        <Header>
-            <img src={Logo2} alt='Journal-Logo'/>
-            <ul className="nav">
-                <li>
-                    <Link to="/login">Log in</Link>
-                </li>
-                <li>
-                    <Link to="/signup">Sign up</Link>
-                </li>
-            </ul>
-        </Header>
+        <LandingPage className='homepage' style={{background: `url(${LandingImage}) no-repeat`,
+        backgroundPosition: '78% 65%'}}>
+        <Header/>
         <LoginContainer>
             <Text>
                 <div className='title'>Keep track of your progress</div>
