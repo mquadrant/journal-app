@@ -35,6 +35,8 @@ const Avatar = styled.div`
     width: 25px;
   height: 25px;
   border: solid 1px #707070;
+  border-radius: 50%;
+  margin: 0 10px;
 `;
 
 interface Props {
@@ -47,7 +49,7 @@ export default function Header2(): any {
             <img src={Logo2} alt='Journal-Logo'/>
             <ul className="nav">
                 <Avatar/>
-                <div>
+                <div style={{marginTop:'2px',}}>
                 {DownArrow}
                 </div>
             </ul>
