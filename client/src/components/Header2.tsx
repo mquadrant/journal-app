@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Icon} from 'semantic-ui-react'
 
 import Logo2 from '../images/LogoAppsvg.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
- 
-const DownArrow = <FontAwesomeIcon icon={faAngleDown} />
 
 const Header = styled.nav`
     display: flex;
@@ -34,8 +31,8 @@ const Header = styled.nav`
 `;
 
 const Avatar = styled.div`
-    width: 25px;
-  height: 25px;
+    width: 30px;
+  height: 30px;
   border: solid 1px #707070;
   border-radius: 50%;
   margin: 0 10px;
@@ -51,8 +48,8 @@ export default function Header2(): any {
             <img src={Logo2} alt='Journal-Logo'/>
             <ul className="nav">
                 <Avatar/>
-                <div style={{marginTop:'2px',}}>
-                {DownArrow}
+                <div style={{marginTop:'5px',}}>
+                <Icon name='angle down'/>
                 </div>
             </ul>
         </Header>
