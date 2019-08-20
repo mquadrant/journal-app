@@ -10,7 +10,9 @@ const DownArrow = <FontAwesomeIcon icon={faAngleDown} />
 const Header = styled.nav`
     display: flex;
     height: 63px;
-    background-color: #eae9f9;
+    position:fixed;
+    width:100%;
+    background-color: rgba(234,233,249,0.8);
     align-items: center;
     padding:8px 50px;
 
