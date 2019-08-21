@@ -12,6 +12,7 @@ const Header = styled.nav`
     background-color: rgba(234,233,249,0.8);
     align-items: center;
     padding:8px 50px;
+    z-index:1000;
 
     img.logo{
         margin-right:auto;
