@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form} from 'semantic-ui-react';
-import styled from 'styled-components';
+import styled,{css} from 'styled-components';
 import LandingImage from '../../images/landingImage.svg';
 import Header from '../../components/Header';
 
@@ -16,17 +16,6 @@ flex-direction:column;
   background-color: #F8F8F8; 
 `;
 
-const submitButton = {
-    width: '141px',
-    padding: '11px',
-    marginTop: '30px',
-    marginBottom: '20px',
-    marginRight: '40px',
-    alignSelf: 'flex-end',
-    color: '#fff',
-    fontWeight: '400',
-    background: '#34a853',
-  };
 
   export const Capsule = styled.button`
   background-color: #b8d344;
@@ -43,6 +32,9 @@ const submitButton = {
   margin: 4px;
   cursor: pointer;
   outline:none;
+  ${(props:any)=>props.style &&css`
+  ${(props:any) => props.style}
+  `}
 `;
 
 const LoginContainer = styled.div`

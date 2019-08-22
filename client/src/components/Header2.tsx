@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import {Icon} from 'semantic-ui-react'
 
-import Logo2 from '../images/LogoAppsvg.svg';
+import Logo2 from '../images/DeepColorLogo.svg';
 
 const Header = styled.nav`
     display: flex;
     height: 63px;
     position:fixed;
     width:100%;
-    background-color: rgba(234,233,249,0.8);
+    background-color: rgba(185,182,230,0.8);
     align-items: center;
     padding:8px 50px;
     z-index:1000;
