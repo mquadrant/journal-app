@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
-import Logo2 from '../images/LogoAppsvg.svg';
+import Logo2 from '../images/DeepColorLogo.svg';
 
 const Header = styled.nav`
     display: flex;

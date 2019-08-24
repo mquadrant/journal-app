@@ -9,7 +9,7 @@ const Header = styled.nav`
     height: 63px;
     position:fixed;
     width:100%;
-    background-color: rgba(185,182,230,0.8);
+    background-color: rgba(233,235,238,0.8);
     align-items: center;
     padding:8px 50px;
     z-index:1000;
