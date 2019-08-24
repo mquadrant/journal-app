@@ -30,7 +30,7 @@ export const login = (payload:ILogin) => {
         .then(res => {
           const token = res.data.token;
           // set token to local storage
-          localStorage.setItem('journToken', token);
+          localStorage.setItem('token', token);
           setAuthorizationToken(token);
 
           dispatch(setCurrentUser(token));

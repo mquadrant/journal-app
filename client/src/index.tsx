@@ -8,12 +8,12 @@ import { Provider } from 'react-redux';
 
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './containers/Login/redux/actions';
-
 import 'semantic-ui-css/semantic.min.css';
 
+
 if (localStorage.journToken) {
-    setAuthorizationToken(localStorage.journToken);
-    store.dispatch(setCurrentUser(localStorage.journToken));
+    setAuthorizationToken(localStorage.token);
+    store.dispatch(setCurrentUser(localStorage.token));
   }
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
