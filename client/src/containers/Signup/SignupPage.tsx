@@ -1,10 +1,14 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import  {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import { Form} from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import Header from '../../components/Header';
-import {LandingPage} from '../Login/LoginPage'
-import {Capsule} from '../Login/LoginPage'
+import {LandingPage} from '../Login/LoginPage';
+import {Capsule} from '../Login/LoginPage';
+import {signup} from '../Signup/redux/actions';
+import { toast } from 'react-toastify';
 
 const SignupContainer = styled.div`
 width: 549px;
@@ -74,34 +78,107 @@ margin-top: 20px;
     }
 `;
 
-interface Props {
-    
+interface Props extends RouteComponentProps<any>{
+    signupHandler: Function,
+    credential: any,
+    error: any,
+    pending:boolean
 }
 
-export default function SignupPage(): any {
+function SignupPage(props:Props) {
+    const {error,pending} = props;
+    const defaultValue = {
+        firstName:'',
+        lastName:'',
+        email: '',
+        password: ''
+    };
+    const [values, setValues] = useState(defaultValue)
+
+    useEffect(() => {
+        if (pending) {
+          toast(<div style={{ textAlign: 'center' }}>Your account is being created...</div>, {
+            autoClose: false,
+            toastId: 13,
+          });
+        }
+        if (!pending) {
+          if (error) {
+            toast.update(13, {
+              render: (
+                <div style={{ textAlign: 'center' }}>
+                  {error}
+                </div>
+              ),
+              type: toast.TYPE.ERROR,
+              autoClose: 3000,
+            });
+          } else {
+            toast.update(13, {
+              render: (
+                <div style={{ textAlign: 'center' }}>Your Journal is ready! Login..</div>
+              ),
+              type: toast.TYPE.SUCCESS,
+              autoClose: 3000,
+            });
+            setValues({
+                firstName:'',
+                lastName:'',
+                email: '',
+                password: ''
+            });
+          }
+        }
+      }, [error, pending]);
+    
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+        const {value, name} :{value:string;name:string} = e.target;
+        setValues({...values,[name]:value});
+    }
+    
+    
+    const handleSubmit = ()=>{
+        props.signupHandler(values,props.history);
+    }
     return (
         <LandingPage>
             <Header/>
             <div style={{height:'calc(100vh - 60px)',display:'flex',alignItems:'center',justifyContent:'center'}}>
                 <SignupContainer>
                     <div className='title'>Create an account</div>
-                    <SignupForm autocomplete="off">
+                    <SignupForm autoComplete="off" onSubmit={(e:any)=>handleSubmit()}>
                         <Form.Field className='form-text form'>
-                            <input id='firstname' placeholder="First Name" type='text' />
+                            <input id='firstname' placeholder="First Name" type='text' 
+                            name="firstName"
+                            onChange={handleChange}
+                            value={values.firstName}
+                            />
                         </Form.Field>
                         <Form.Field className='form-text form'>
-                            <input id='lastname' placeholder="Last Name" type='text' />
+                            <input id='lastname' placeholder="Last Name" type='text' 
+                            name="lastName"
+                            onChange={handleChange}
+                            value={values.lastName}
+                            />
                         </Form.Field>
                         <Form.Field className='form-email form'>
-                            <input id='email' placeholder="Email" type='email' />
+                            <input id='email' placeholder="Email" type='email' 
+                            name="email"
+                            onChange={handleChange}
+                            value={values.email}
+                            />
                         </Form.Field>
                         <Form.Field className='form-password form'>
                             <input id='password' placeholder="Password" type='password'
-                        // onChange={'handleChange'}
-                        // defaultValue={'age'} 
+                            name="password"
+                            onChange={handleChange}
+                            value={values.password}
                         />
                         </Form.Field>
-                        <Capsule style={{width:'100%',margin:'0px',boxShadow: '0 3px 12px 0 rgba(0, 0, 0, 0.16)'}}>SIGN UP FOR FREE</Capsule>
+                        <Capsule style={{width:'100%',margin:'0px',boxShadow: '0 3px 12px 0 rgba(0, 0, 0, 0.16)'}}
+                        >
+                            SIGN UP FOR FREE
+                            </Capsule>
                     </SignupForm>
                     <p className="info-note">Already have an account? <span><Link to="/login">Sign in</Link></span></p>
                 </SignupContainer>
@@ -109,3 +186,22 @@ export default function SignupPage(): any {
         </LandingPage>
     )
 }
+
+const mapStateToProps = (state:any) => {
+    return {
+        credential: state.signup.credential,
+        error: state.signup.error,
+        pending: state.signup.pending,
+    };
+  };
+  
+  const mapDispatchToProps = (dispatch:any) => {
+    return {
+      signupHandler: (payload:any,history:any) => dispatch(signup(payload,history)),
+    };
+  };
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(SignupPage);
