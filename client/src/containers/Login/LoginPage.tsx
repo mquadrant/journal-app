@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import { Form} from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import styled,{css} from 'styled-components';
 import LandingImage from '../../images/landingImage.svg';
 import Header from '../../components/Header';
-
-interface Props {
-    
-}
+import {login} from './redux/actions';
 
 
 export const LandingPage =  styled.div`
@@ -91,10 +90,40 @@ const SimpleForm =  styled(Form)`
     }
 `;
 
-export default function LoginPage(): any {
-    return (
-        <LandingPage className='homepage' style={{background: `url(${LandingImage}) no-repeat`,
-        backgroundPosition: '78% 65%'}}>
+interface Props extends RouteComponentProps<any>{
+    loginHandler: Function,
+    isAuthenticated: boolean,
+        error: any,
+        pending:boolean
+}
+
+function LoginPage(props:Props) {
+
+const [values, setValues] = useState({
+    email: '',
+    password: ''
+})
+
+const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+    const {value, name} :{value:string;name:string} = e.target;
+    setValues({...values,[name]:value})
+}
+
+useEffect(() => {
+    if(props.isAuthenticated){
+        props.history.push(`/app/dashboard`);
+    }
+}, [props.isAuthenticated,props.history])
+
+const handleSubmit = ()=>{
+    props.loginHandler(values);
+}
+
+return (
+        <LandingPage className='homepage' 
+        style={{background: `url(${LandingImage}) no-repeat`,
+        backgroundPosition: '78% 65%'
+        }}>
         <Header/>
         <LoginContainer>
             <Text>
@@ -103,17 +132,41 @@ export default function LoginPage(): any {
             </Text>
             <SimpleForm>
                 <Form.Field className='form-email form'>
-                <input id='email' placeholder="Email Address" type='email' />
+                <input id='email' placeholder="Email Address" type='email'
+                name= 'email'
+                onChange={handleChange}
+                value={values.email} 
+                 />
                 </Form.Field>
                 <Form.Field className='form-password form'>
                 <input id='password' placeholder="Password" type='password'
-                // onChange={'handleChange'}
-                // defaultValue={'age'} 
+                name="password"
+                onChange={handleChange}
+                value={values.password} 
                 />
                 </Form.Field>
-                <Capsule>Log in</Capsule>
+                <Capsule onClick={handleSubmit}>Log in</Capsule>
             </SimpleForm>
         </LoginContainer>
         </LandingPage>
     )
 }
+
+const mapStateToProps = (state:any) => {
+    return {
+        isAuthenticated: state.login.isAuthenticated,
+        error: state.login.error,
+        pending: state.login.pending,
+    };
+  };
+  
+  const mapDispatchToProps = (dispatch:any) => {
+    return {
+      loginHandler: (payload:any) => dispatch(login(payload)),
+    };
+  };
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(LoginPage);
