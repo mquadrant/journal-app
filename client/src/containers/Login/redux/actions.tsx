@@ -23,7 +23,6 @@ export function loginError(error:any) {
 export const login = (payload:ILogin) => {
   return (dispatch:any) => { 
     dispatch(loginPending(true));
-    // get token from the local storage
     return (
       axios
         .post('/auth/login', payload)
@@ -39,7 +38,7 @@ export const login = (payload:ILogin) => {
         })
         .catch((error:any) => {
           dispatch(loginError(error));
-          return;
+          throw error;
         })
     );
   };

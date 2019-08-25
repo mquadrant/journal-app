@@ -13,7 +13,7 @@ export default (state = initialState, action:any = {}) => {
     case SET_CURRENT_USER:
       return {
         ...state,
-        isAuthenticated: action.token||false,
+        isAuthenticated: (action.token)?true:false,
         pending:false
       };
     case SET_PENDING:
