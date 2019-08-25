@@ -135,7 +135,7 @@ const handleSubmit = async(e:any)=>{
         toast.success('You are succesfully login!');
         props.history.push('/app/dashboard');
       } catch (error) {
-        if (error.response.data.status === 'Login failed') {
+        if (error.response.data.data.status === 'Login failed') {
           setValues({
             ...values,
             errorMessage: 'Invalid password or email',
