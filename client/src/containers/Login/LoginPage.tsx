@@ -6,6 +6,8 @@ import styled,{css} from 'styled-components';
 import LandingImage from '../../images/landingImage.svg';
 import Header from '../../components/Header';
 import {login} from './redux/actions';
+import {toast} from 'react-toastify';
+import {AuthError} from '../../components/ErrorLabel';
 
 
 export const LandingPage =  styled.div`
@@ -101,7 +103,8 @@ function LoginPage(props:Props) {
 
 const [values, setValues] = useState({
     email: '',
-    password: ''
+    password: '',
+    errorMessage: ''
 })
 
 const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -115,8 +118,35 @@ useEffect(() => {
     }
 }, [props.isAuthenticated,props.history])
 
-const handleSubmit = ()=>{
-    props.loginHandler(values);
+const handleSubmit = async(e:any)=>{
+    setValues({
+        ...values,
+        errorMessage: '',
+      });
+      e.preventDefault();
+      const user = {
+        email: values.email,
+        password: values.password,
+      };
+      // attach it to the loginHandler as a props 
+      try {
+        await props.loginHandler(user);
+        setValues({ ...values, email: '', password: '', errorMessage: '' });
+        toast.success('You are succesfully login!');
+        props.history.push('/app/dashboard');
+      } catch (error) {
+        if (error.response.data.status === 'Login failed') {
+          setValues({
+            ...values,
+            errorMessage: 'Invalid password or email',
+          });
+        } else {
+          setValues({
+            ...values,
+            errorMessage: 'Error occured while submitting form',
+          });
+        }
+      }
 }
 
 return (
@@ -148,6 +178,11 @@ return (
                 <Capsule onClick={handleSubmit}>Log in</Capsule>
             </SimpleForm>
         </LoginContainer>
+        {values.errorMessage ? (
+          <AuthError>{values.errorMessage}</AuthError>
+        ) : (
+          ''
+        )}
         </LandingPage>
     )
 }

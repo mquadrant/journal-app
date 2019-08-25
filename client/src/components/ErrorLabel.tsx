@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const AuthError = styled.p`
   &&& {
     color: #fa4242;
-    background-color:#f1f0ff;
+    background-color:rgba(241,240,255,0.5);
     text-align: center;
     padding: 6px 0;
     border-radius: 3px;
