@@ -5,13 +5,19 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store/store'
 import { Provider } from 'react-redux';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import { setCurrentUser } from './containers/Login/redux/actions';
 import 'semantic-ui-css/semantic.min.css';
 
+toast.configure({
+  autoClose: 6000,
+  draggable: false,
+});
 
-if (localStorage.journToken) {
+if (localStorage.token) {
     setAuthorizationToken(localStorage.token);
     store.dispatch(setCurrentUser(localStorage.token));
   }

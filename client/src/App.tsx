@@ -1,13 +1,11 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const AppRoutes = lazy(() => import('./routes/AppRoutes'));
 const LoginPage = lazy(() => import('./containers/Login/LoginPage'));
 const SignupPage = lazy(() => import('./containers/Signup/SignupPage'));
 
-toast.configure();
+
 
 const App: React.FC = () => {
   return (
@@ -22,7 +20,6 @@ const App: React.FC = () => {
             </Route>
           </Switch>
         </Suspense>
-        <ToastContainer />
       </Router>
     </React.Fragment>
   );
