@@ -14,6 +14,7 @@ export default (state = initialState, action:any = {}) => {
       return {
         ...state,
         credential : action.credential,
+        error: null,
         pending:false
       };
     case CREATE_USER_PENDING:
