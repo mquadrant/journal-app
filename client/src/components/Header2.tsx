@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Icon} from 'semantic-ui-react'
 
 import Logo2 from '../images/DeepColorLogo.svg';
+import Image from '../images/avatar.png';
 
 const Header = styled.nav`
     display: flex;
@@ -32,11 +33,15 @@ const Header = styled.nav`
 `;
 
 const Avatar = styled.div`
-    width: 30px;
-  height: 30px;
+    width: 35px;
+  height: 35px;
   border: solid 1px #707070;
   border-radius: 50%;
   margin: 0 10px;
+  background-image: url(${Image});
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: cover;
 `;
 
 interface Props {
@@ -49,7 +54,7 @@ export default function Header2(): any {
             <img src={Logo2} alt='Journal-Logo'/>
             <ul className="nav">
                 <Avatar/>
-                <div style={{marginTop:'5px',}}>
+                <div style={{marginTop:'7px',}}>
                 <Icon name='angle down'/>
                 </div>
             </ul>
