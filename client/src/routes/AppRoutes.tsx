@@ -6,7 +6,7 @@ import Auth from '../utils/Auth';
 
 
 const DashboardPage = lazy(() => import("../containers/Dashboard/DashboardPage"));
-const JournalEditPage = lazy(() => import("../containers/Dashboard/DashboardPage"));
+const JournalEditPage = lazy(() => import("../containers/Dashboard/EditPage"));
 
 interface Props {
     
