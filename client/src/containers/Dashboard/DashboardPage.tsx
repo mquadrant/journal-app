@@ -21,7 +21,7 @@ display:flex;
 flex-direction:column;
 align-items: center;
     width: 876px;
-  height: 2000px;
+  height: auto;
   margin-top:70px;
   margin-bottom:20px;
   border-radius: 5px;
@@ -147,6 +147,7 @@ function DashboardPage(props:any): any {
     body: '',
     errorMessage: ''
 })
+console.log('i am here')
 
 const handleChange = (e:any)=>{
     const {value, name} :{value:string;name:string} = e.target;
