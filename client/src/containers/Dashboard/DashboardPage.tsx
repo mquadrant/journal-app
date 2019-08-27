@@ -196,7 +196,6 @@ const handleSubmit = async(e:any)=>{
                         </JournalForm>
                     </Message>
                 </Inner>
-                <Space />
                 <AllJournals />
             </Outer>
         </DashboardBody>
