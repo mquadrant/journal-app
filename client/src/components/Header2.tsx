@@ -114,7 +114,7 @@ export default function Header2(): any {
                 <Icon name='angle down' onClick={() => setdropDown(!dropDown)}/>
                 <div className={`drop-down ${!dropDown ? 'hidden' : null}`}>
                     <ul onClick={() => setdropDown(false)}>
-                        <Link to="/login" onClick={logoutHandler}>
+                        <Link to="/" onClick={logoutHandler}>
                         <li>Log out</li>
                         </Link>
                     </ul>

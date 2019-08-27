@@ -56,7 +56,7 @@ width: 184px;
   line-height: 1.25;
   letter-spacing: normal;
   text-align: center;
-  color: #2d293d;
+  color:#607d8b;
 `;
 
 const SecondaryTitle = styled.div`
@@ -139,7 +139,7 @@ function EditPage(props:any): any {
 })
     useEffect(() => {
         getSingleJournalHandler(journalId);
-    }, [getSingleJournalHandler]);
+    }, [getSingleJournalHandler,journalId]);
 
     useEffect(() => {
         setValues({
