@@ -130,3 +130,34 @@ export const updateJournal = (payload:any,id:any) => {
     );
   };
 };
+
+//DELETE JOURNAL
+export function deleteJournalAction(id:any) {
+    return { type: types.DELETE_JOURNAL,id};
+  }
+  
+  export function deletePending(){
+    return { type: types.DELETE_JOURNAL_PENDING};
+  }
+  
+  export function deleteError(error:any) {
+    return { type: types.DELETE_JOURNAL_ERROR, error };
+  }
+
+export const deleteJournal = (id:any) => {
+  return (dispatch:any) => { 
+    dispatch(deletePending());
+    return (
+      axios
+        .delete(`/journals/${id}`)
+        .then(res => {
+            dispatch(deleteJournalAction(id))
+          return ;
+        })
+        .catch((error:any) => {
+          dispatch(deleteError(error));
+          throw error;
+        })
+    );
+  };
+};
