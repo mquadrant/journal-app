@@ -8,7 +8,7 @@ export interface IUser extends Document{
 }
 
 const userSchema:Schema = new Schema({
-    first_name: {
+    firstName: {
         type: String,
         required: [true, "A user must have first name"],
         trim: true,
@@ -17,7 +17,7 @@ const userSchema:Schema = new Schema({
             "A user name must have less or equal to 40 characters",
         ],
     },
-    last_name: {
+    lastName: {
         type: String,
         required:[true,"A user must have first name"],
         trim: true,
@@ -30,12 +30,13 @@ const userSchema:Schema = new Schema({
         type: String,
         required:[true,"A user must have email"],
         trim: true,
+        unique:true,
     },
     password:{
         type:String,
         required:[true,"A user must have password"]
     }
-});
+},{ timestamps: true });
 
 
 export default mongoose.model<IUser>('User',userSchema);

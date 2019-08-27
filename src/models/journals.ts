@@ -10,14 +10,15 @@ export interface IJournal extends Document{
 const journalSchema:Schema = new Schema({
     title:{
         type:String,
+        required:true
     },
     body:{
         type: String,
     },
     userId: {
         type: Schema.Types.ObjectId,
-    ref: 'User'
-}
-})
+        ref: 'User'
+    }
+},{ timestamps: true })
 
 export default mongoose.model<IJournal>("Journal",journalSchema);
