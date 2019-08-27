@@ -28,7 +28,7 @@ export const signup = (payload:ISignup,history:any) => {
         .post('/users/signup', payload)
         .then(res => {
           dispatch(setSignUp(res.data.data))
-          history.push('/login');
+          history.push('/');
           return res;
         })
         .catch((error:any) => {
