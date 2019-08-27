@@ -13,11 +13,9 @@ const App: React.FC = () => {
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
-            <Route>
-              <Route path="/" exact component={LoginPage} />
-              <Route path="/signup" exact component={SignupPage} />
-              <Route path="/app" exact component={AppRoutes} />
-            </Route>
+              <Route path="/signup" component={SignupPage} />
+              <Route path="/app" component={AppRoutes} />
+              <Route path="/" component={LoginPage} />
           </Switch>
         </Suspense>
       </Router>
