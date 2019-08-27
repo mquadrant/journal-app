@@ -1,0 +1,44 @@
+div.DraftEditor-root {
+    border: solid 0.5px #dddddd;
+    width: 600px !important;
+    min-height: 329px;
+
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+div.DraftEditor-editorContainer,
+div.public-DraftEditor-content {
+    min-height: 329px;
+    padding: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+div.public-DraftEditorPlaceholder-inner {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.42;
+    letter-spacing: normal;
+    text-align: left;
+    padding: 10px 0 0 17px;
+    color: #c8c8ca;
+}
+
+div.public-DraftEditorPlaceholder-root {
+    display: inline-block;
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+div.public-DraftEditorPlaceholder-hasFocus {
+    display: none;
+}
