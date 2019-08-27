@@ -9,6 +9,7 @@ import {getAllJournals,deleteJournal} from './redux/actions';
 import moment from 'moment';
 import {Icon} from 'semantic-ui-react';
 import { Loader} from 'semantic-ui-react';
+import HorizontalLine from '../../components/HorizontalLine';
 
 
 const Title = styled.div`
@@ -59,7 +60,7 @@ padding-bottom:35px;
     div.drop-down {
       position: absolute;
       display: block;
-      width: 100px;
+      width: 120px;
       border-radius: 10px;
       background-color: #fff;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
@@ -120,6 +121,7 @@ useEffect(() => {
 
     return (
         <div>
+          <HorizontalLine style={{margin:'40px 0px',backgroundColor: '#000'}}/>
             {!allJournalPending?allJournals.map((journal:any)=>(
                   <div key={journal._id}>
                   <Message style={{height:'auto'}}>
@@ -145,7 +147,7 @@ useEffect(() => {
                 <Space style={{height:'20px'}}/>
                 </div>
                 )):
-                <div>
+                <div style={{marginTop:'30px',marginBottom:'30px'}}>
                   <Loader active inline='centered' />
               </div>}
         </div>

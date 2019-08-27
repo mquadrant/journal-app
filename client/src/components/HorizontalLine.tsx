@@ -9,7 +9,7 @@ const HorizontalLine = styled.hr`
   margin-right: auto;
   width: 100%;
   background-color: #666;
-  opacity: 0.2;
+  opacity: 0.5;
 `;
 
 export default HorizontalLine;
