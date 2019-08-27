@@ -146,11 +146,6 @@ useEffect(() => {
                 </div>
                 )):
                 <div>
-                  {/* <Dimmer active inverted>
-                    <Loader size="large" inverted>
-                      Loading
-                    </Loader>
-                  </Dimmer> */}
                   <Loader active inline='centered' />
               </div>}
         </div>
