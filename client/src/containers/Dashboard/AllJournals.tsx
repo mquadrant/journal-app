@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import {getAllJournals,deleteJournal} from './redux/actions';
 import moment from 'moment';
 import {Icon} from 'semantic-ui-react';
+import { Loader} from 'semantic-ui-react';
+
 
 const Title = styled.div`
 margin-bottom:10px;
@@ -142,7 +144,15 @@ useEffect(() => {
                   </Message>
                 <Space style={{height:'20px'}}/>
                 </div>
-                )):null}
+                )):
+                <div>
+                  {/* <Dimmer active inverted>
+                    <Loader size="large" inverted>
+                      Loading
+                    </Loader>
+                  </Dimmer> */}
+                  <Loader active inline='centered' />
+              </div>}
         </div>
     )
 }
