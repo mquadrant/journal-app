@@ -12,8 +12,8 @@ export function setCurrentUser(token:string) {
   return { type: types.SET_CURRENT_USER, token};
 }
 
-export function loginPending(isPending:boolean) {
-  return { type: types.SET_PENDING, isPending };
+export function loginPending(){
+  return { type: types.SET_PENDING};
 }
 
 export function loginError(error:any) {
@@ -22,7 +22,7 @@ export function loginError(error:any) {
 
 export const login = (payload:ILogin) => {
   return (dispatch:any) => { 
-    dispatch(loginPending(true));
+    dispatch(loginPending());
     return (
       axios
         .post('/auth/login', payload)
