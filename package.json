@@ -5,7 +5,8 @@
   "scripts": {
     "start": "./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "NODE_ENV=development jest"
+    "test": "NODE_ENV=development jest",
+    "postinstall": "tsc"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
