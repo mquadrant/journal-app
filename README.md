@@ -12,4 +12,5 @@ Users can;
 - Update journals too!
 
 The UI design can be found here: https://xd.adobe.com/view/eb91e4da-c65b-4ae4-40e4-22177d648e6a-9da0/?fullscreen
+
 Live site here: https://daily-journal-app.herokuapp.com/app/dashboard
