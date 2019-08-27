@@ -1,5 +1,7 @@
 import { SET_POST_JOURNAL, POST_JOURNAL_PENDING, POST_JOURNAL_ERROR,
-    GET_ALL_JOURNAL_PENDING,GET_ALL_JOURNAL_ERROR,GET_ALL_JOURNAL
+    GET_ALL_JOURNAL_PENDING,GET_ALL_JOURNAL_ERROR,GET_ALL_JOURNAL,
+    GET_SINGLE_JOURNAL,GET_SINGLE_JOURNAL_PENDING,GET_SINGLE_JOURNAL_ERROR,
+    DELETE_JOURNAL,DELETE_JOURNAL_PENDING,DELETE_JOURNAL_ERROR
 } from './types';
 
 // set initial state 
@@ -9,6 +11,14 @@ const initialState = {
   allJournals: [],
   allJournalPending:false,
   allJournalError:null,
+
+  singleJournal:{},
+  singleJournalError: null,
+singleJournalPending:false,
+
+deletePending:false,
+deleteError:null
+
 };
 
 //reducer
@@ -25,6 +35,7 @@ export default (state = initialState, action:any = {}) => {
         error: action.error,
         pending:false
       };
+      //2
     case GET_ALL_JOURNAL:
       return {
         ...state,
@@ -41,6 +52,36 @@ export default (state = initialState, action:any = {}) => {
         ...state,
         allJournalError: action.error,
         allJournalPending:false
+      };
+      //3
+    case GET_SINGLE_JOURNAL:
+      return {
+        ...state,
+        singleJournal : action.payload,
+        singleJournalPending: false,
+      };
+    case GET_SINGLE_JOURNAL_PENDING:
+      return {
+        ...state,
+        singleJournalPending: true,
+      };
+    case GET_SINGLE_JOURNAL_ERROR:
+      return {
+        ...state,
+        singleJournalError: action.error,
+        singleJournalPending:false
+      };
+      //4
+    case DELETE_JOURNAL_PENDING:
+      return {
+        ...state,
+        deletePending: true,
+      };
+    case DELETE_JOURNAL_ERROR:
+      return {
+        ...state,
+        deleteError: action.error,
+        deletePending:false
       };
     default:
       return state;
