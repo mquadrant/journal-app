@@ -50,5 +50,8 @@
     "pretty-quick": "^1.11.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.3"
+  },
+  "engines":{
+    "node":"10.15.3"
   }
 }
