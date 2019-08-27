@@ -69,29 +69,62 @@ export const getAllJournals = () => {
 };
 
 export function getSingleJournalAction(payload:any) {
-    return { type: types.GET_ALL_JOURNAL, payload};
+    return { type: types.GET_SINGLE_JOURNAL, payload};
   }
   
   export function getSinglePending(){
-    return { type: types.GET_ALL_JOURNAL_PENDING};
+    return { type: types.GET_SINGLE_JOURNAL_PENDING};
   }
   
   export function getSingleError(error:any) {
-    return { type: types.GET_ALL_JOURNAL_ERROR, error };
+    return { type: types.GET_SINGLE_JOURNAL_ERROR, error };
   }
 
-export const getSingleJournals = () => {
+export const getSingleJournals = (id:any) => {
   return (dispatch:any) => { 
     dispatch(getSinglePending());
     return (
       axios
-        .get('/journals')
+        .get(`/journals/${id}`)
         .then(res => {
             dispatch(getSingleJournalAction(res.data.data))
           return res.data.data;
         })
         .catch((error:any) => {
           dispatch(getSingleError(error));
+          throw error;
+        })
+    );
+  };
+};
+
+export function getUpdateJournalAction(payload:any) {
+    return { type: types.UPDATE_JOURNAL, payload};
+  }
+  
+  export function updatePending(){
+    return { type: types.UPDATE_JOURNAL_PENDING};
+  }
+  
+  export function updateError(error:any) {
+    return { type: types.UPDATE_JOURNAL_ERROR, error };
+  }
+
+export const updateJournal = (payload:any,id:any) => {
+  return (dispatch:any) => { 
+    dispatch(updatePending());
+    return (
+      axios
+        .put(`/journals/${id}`,{
+            title:payload.title,
+            body:payload.body
+        })
+        .then(res => {
+            dispatch(getUpdateJournalAction(res.data.data))
+          return res.data.data;
+        })
+        .catch((error:any) => {
+          dispatch(updateError(error));
           throw error;
         })
     );
