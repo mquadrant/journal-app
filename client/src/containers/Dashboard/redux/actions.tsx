@@ -57,12 +57,41 @@ export const getAllJournals = () => {
       axios
         .get('/journals')
         .then(res => {
-            console.log(res.data.data)
             dispatch(getAllJournalAction(res.data.data))
           return res.data.data;
         })
         .catch((error:any) => {
           dispatch(getAllError(error));
+          throw error;
+        })
+    );
+  };
+};
+
+export function getSingleJournalAction(payload:any) {
+    return { type: types.GET_ALL_JOURNAL, payload};
+  }
+  
+  export function getSinglePending(){
+    return { type: types.GET_ALL_JOURNAL_PENDING};
+  }
+  
+  export function getSingleError(error:any) {
+    return { type: types.GET_ALL_JOURNAL_ERROR, error };
+  }
+
+export const getSingleJournals = () => {
+  return (dispatch:any) => { 
+    dispatch(getSinglePending());
+    return (
+      axios
+        .get('/journals')
+        .then(res => {
+            dispatch(getSingleJournalAction(res.data.data))
+          return res.data.data;
+        })
+        .catch((error:any) => {
+          dispatch(getSingleError(error));
           throw error;
         })
     );
