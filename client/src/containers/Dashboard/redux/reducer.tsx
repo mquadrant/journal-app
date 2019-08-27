@@ -72,6 +72,12 @@ export default (state = initialState, action:any = {}) => {
         singleJournalPending:false
       };
       //4
+    case DELETE_JOURNAL:
+      return {
+        ...state,
+        allJournals: state.allJournals.filter((journal:any)=> journal._id !== action.id),
+        deletePending: true,
+      };
     case DELETE_JOURNAL_PENDING:
       return {
         ...state,
