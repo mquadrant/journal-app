@@ -1,8 +1,12 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled,{css} from 'styled-components';
 import {Form} from 'semantic-ui-react';
 import { Capsule } from '../Login/LoginPage';
-import MyEditor from '../../components/Editor/Editor';
+import {toast} from 'react-toastify';
+import { connect } from 'react-redux';
+import { postJournal } from './redux/actions';
+import AllJournals from './AllJournals';
+import {getAllJournals} from './redux/actions';
 
 const DashboardBody = styled.div`
     display:flex;
@@ -30,7 +34,7 @@ const Inner = styled.div`
 margin-top:35px;
 `;
 
-const Message = styled.div`
+export const Message = styled.div`
 display:flex;
 flex-direction:column;
 align-items: center;
@@ -41,6 +45,11 @@ padding-bottom:35px;
   ${(props:any)=>props.style &&css`
   ${(props:any) => props.style}
   `}
+
+  .saved-journals{
+    padding:15px 20px;
+    width:100%;
+  }
 `;
 
 const PrimaryTitle = styled.div`
@@ -104,7 +113,7 @@ const JournalForm =  styled(Form)`
 .bodyField textarea{
     resize: none !important;
     width: 600px !important;
-  /* min-height: 329px !important; */
+  min-height: 329px !important;
   font-size: 16px !important;
   border-radius: 5px !important;
   border: solid 0.5px #dddddd !important;
@@ -123,14 +132,38 @@ const JournalForm =  styled(Form)`
         text-align: left;
     }
 `;
-const Space = styled.div`
-height: 50px
+
+export const Space = styled.div`
+    height: 50px;
 `;
 interface Props {
     
 }
 
-export default function DashboardPage(): any {
+function DashboardPage(props:any): any {
+  
+  const [values, setValues] = useState({
+    title: '',
+    body: '',
+    errorMessage: ''
+})
+
+const handleChange = (e:any)=>{
+    const {value, name} :{value:string;name:string} = e.target;
+    setValues({...values,[name]:value})
+}
+
+const handleSubmit = async(e:any)=>{
+  e.preventDefault();
+  try {
+    await props.postJournalHandler(values);
+    setValues({ ...values, title: '', body: '', errorMessage: '' });
+    toast.success('Your Journal has been saved');
+    props.getAllJournalHandler();
+  } catch (error) {
+        toast.error('Something went wrong!');
+    }
+}
   
     return (
         <DashboardBody>
@@ -144,18 +177,47 @@ export default function DashboardPage(): any {
                     <Message>
                         <JournalForm>
                             <Form.Field className='titleField'>
-                                <input id='title' placeholder="Title" type='text' />
+                                <input id='title' placeholder="Title" type='text' 
+                                name="title"
+                                onChange={handleChange}
+                                value={values.title} 
+                                />
                             </Form.Field>
-                            <MyEditor/>
-                            <Capsule style={{fontSize:'16px'}}>Post my journal</Capsule>
+                            <Form.Field className='bodyField'>
+                            <textarea 
+                            placeholder='Body'
+                            name='body'
+                            value={values.body} 
+                            onChange={handleChange} 
+                            />
+                            </Form.Field>
+                            <Capsule style={{fontSize:'16px'}} onClick={handleSubmit}>Post my journal</Capsule>
                         </JournalForm>
                     </Message>
                 </Inner>
                 <Space />
-                <Message style={{height:'auto'}}>
-                hhghg
-                </Message>
+                <AllJournals />
             </Outer>
         </DashboardBody>
     )
 }
+
+
+const mapStateToProps = (state:any) => {
+  return {
+      error: state.journals.error,
+      pending: state.journals.pending,
+  };
+};
+
+const mapDispatchToProps = (dispatch:any) => {
+  return {
+    postJournalHandler: (payload:any) => dispatch(postJournal(payload)),
+    getAllJournalHandler: () => dispatch(getAllJournals()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DashboardPage);
