@@ -139,7 +139,7 @@ function EditPage(props:any): any {
 })
     useEffect(() => {
         getSingleJournalHandler(journalId);
-    }, [getSingleJournalHandler]);
+    }, [getSingleJournalHandler,journalId]);
 
     useEffect(() => {
         setValues({

@@ -180,7 +180,7 @@ function SignupPage(props:Props) {
                             SIGN UP FOR FREE
                             </Capsule>
                     </SignupForm>
-                    <p className="info-note">Already have an account? <span><Link to="/login">Sign in</Link></span></p>
+                    <p className="info-note">Already have an account? <span><Link to="/">Sign in</Link></span></p>
                 </SignupContainer>
             </div>
         </LandingPage>

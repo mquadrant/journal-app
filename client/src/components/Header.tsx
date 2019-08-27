@@ -36,7 +36,7 @@ export default function HeaderNav(): any {
             <img src={Logo2} alt='Journal-Logo'/>
             <ul className="nav">
                 <li>
-                    <Link to="/login">Log in</Link>
+                    <Link to="/">Log in</Link>
                 </li>
                 <li>
                     <Link to="/signup">Sign up</Link>
