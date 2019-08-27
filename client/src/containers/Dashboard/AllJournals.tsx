@@ -1,11 +1,11 @@
 import React,{createRef,useState,useEffect} from 'react';
 import styled,{css} from 'styled-components';
 import {Link } from 'react-router-dom';
-import HorizontalLine from './../../components/HorizontalLine';
+import {toast} from 'react-toastify';
 
 import {Space} from './DashboardPage';
 import { connect } from 'react-redux';
-import {getAllJournals} from './redux/actions';
+import {getAllJournals,deleteJournal} from './redux/actions';
 import moment from 'moment';
 import {Icon} from 'semantic-ui-react';
 
@@ -85,7 +85,7 @@ padding-bottom:35px;
 `;
 
 function AllJournals(props:any){
-const {getAllJournalHandler,allJournals,allJournalPending} = props;
+const {getAllJournalHandler,allJournals,allJournalPending,deleteJournalHandler} = props;
     
 const [dropDown, setdropDown] = useState(false);
 useEffect(() => {
@@ -106,6 +106,16 @@ useEffect(() => {
     target.classList.add('hidden');
   }
 
+  const deleteHandler = async(id:any)=>{
+    try {
+      await deleteJournalHandler(id);
+      toast.success('Journal has been deleted');
+    } catch (error) {
+          toast.error('Journal not totally deleted');
+      }
+
+  }
+
     return (
         <div>
             {!allJournalPending?allJournals.map((journal:any)=>(
@@ -116,15 +126,15 @@ useEffect(() => {
                         <Icon name='angle down' onClick={toggle}/>
                           <div className={`drop-down ${!dropDown ? 'hidden' : null}`}>
                               <ul onClick={() => setdropDown(false)}>
-                                  <Link to="/edit" onClick={editHandler}>
+                                  <Link to={`/app/journal/${journal._id}/edit`} onClick={editHandler}>
                                   <li>Edit Journal</li>
                                   </Link>
-                                  <li>Delete Journal</li>
+                                  <li onClick ={()=>deleteHandler(journal._id)}>Delete Journal</li>
                               </ul>
                           </div>
                         </div>
                     </ul>
-                  <div className='saved-journals'>
+                  <div  className='saved-journals'>
                       <Date>{moment(journal.createdAt).format('Do MMMM, YYYY')}</Date>
                     <Title>{journal.title}</Title>
                     <Body>{journal.body}</Body>
@@ -148,6 +158,7 @@ const mapStateToProps = (state:any) => {
   const mapDispatchToProps = (dispatch:any) => {
     return {
       getAllJournalHandler: () => dispatch(getAllJournals()),
+      deleteJournalHandler: (id:any) => dispatch(deleteJournal(id)),
     };
   };
   
